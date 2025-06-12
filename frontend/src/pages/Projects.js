@@ -1,153 +1,144 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Box,
   Container,
+  SimpleGrid,
+  Image,
+  Flex,
   Heading,
   Text,
-  SimpleGrid,
-  Badge,
-  Image,
   Stack,
-  Button,
+  StackDivider,
+  Icon,
   useColorModeValue,
-  HStack,
+  Box,
+  Button,
   Tag,
   TagLabel,
   TagCloseButton,
+  HStack,
 } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import axios from 'axios';
+import { motion } from 'framer-motion';
 
 const MotionBox = motion(Box);
+
+const API_URL = 'https://portfolio-backend-1slt.onrender.com';
 
 const ProjectCard = ({ project }) => {
   return (
     <MotionBox
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      whileHover={{ y: -5 }}
+      transition={{ duration: 0.3 }}
+      bg={useColorModeValue('white', 'gray.800')}
+      boxShadow={'xl'}
+      rounded={'md'}
+      overflow={'hidden'}
     >
-      <Box
-        maxW={'445px'}
-        w={'full'}
-        bg={useColorModeValue('white', 'gray.800')}
-        boxShadow={'2xl'}
-        rounded={'md'}
-        p={6}
-        overflow={'hidden'}
-        _hover={{
-          transform: 'translateY(-5px)',
-          transition: 'all 0.3s ease',
-        }}
-      >
-        <Box
-          h={'210px'}
-          bg={'gray.100'}
-          mt={-6}
-          mx={-6}
-          mb={6}
-          pos={'relative'}
+      <Box position="relative" height="200px">
+        <Image
+          src={project.image || '/assets/logo2.png'}
+          fallbackSrc="/assets/logo2.png"
+          layout={'fill'}
+          objectFit="cover"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = '/assets/logo2.png';
+          }}
+        />
+      </Box>
+
+      <Stack p={6}>
+        <Heading
+          color={useColorModeValue('gray.700', 'white')}
+          fontSize={'2xl'}
+          fontFamily={'body'}
         >
-          <Image
-            src={project.image}
-            fallbackSrc="https://via.placeholder.com/400x210"
-            layout={'fill'}
-          />
-        </Box>
-        <Stack>
-          <Text
-            color={'green.500'}
-            textTransform={'uppercase'}
-            fontWeight={800}
-            fontSize={'sm'}
-            letterSpacing={1.1}
-          >
-            Project
-          </Text>
-          <Heading
-            color={useColorModeValue('gray.700', 'white')}
-            fontSize={'2xl'}
-            fontFamily={'body'}
-          >
-            {project.title}
-          </Heading>
-          <Text color={'gray.500'}>{project.description}</Text>
+          {project.title}
+        </Heading>
+        <Text color={'gray.500'}>{project.description}</Text>
+
+        <Stack direction={'row'} spacing={2} mt={4}>
+          {project.technologies.map((tech, i) => (
+            <Tag
+              key={i}
+              size="sm"
+              borderRadius="full"
+              variant="solid"
+              colorScheme="blue"
+            >
+              {tech}
+            </Tag>
+          ))}
         </Stack>
-        <Stack mt={6} direction={'row'} spacing={4} align={'center'}>
-          <Stack direction={'row'} spacing={4}>
-            {project.technologies.map((tech) => (
-              <Tag
-                size={'sm'}
-                key={tech}
-                borderRadius="full"
-                variant="solid"
-                colorScheme="brand"
-              >
-                <TagLabel>{tech}</TagLabel>
-              </Tag>
-            ))}
-          </Stack>
-        </Stack>
+
         <Stack mt={6} direction={'row'} spacing={4}>
-          <Button
-            leftIcon={<FaGithub />}
-            as="a"
-            href={project.github}
-            target="_blank"
-            size="sm"
-            colorScheme="brand"
-            variant="outline"
-          >
-            GitHub
-          </Button>
-          {project.live && (
+          {project.github && (
+            <Button
+              leftIcon={<FaGithub />}
+              colorScheme="gray"
+              variant="outline"
+              as="a"
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </Button>
+          )}
+          {project.demo && (
             <Button
               leftIcon={<FaExternalLinkAlt />}
+              colorScheme="blue"
               as="a"
-              href={project.live}
+              href={project.demo}
               target="_blank"
-              size="sm"
-              colorScheme="brand"
+              rel="noopener noreferrer"
             >
               Live Demo
             </Button>
           )}
         </Stack>
-      </Box>
+      </Stack>
     </MotionBox>
   );
 };
 
-export default function Projects() {
+const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [selectedTech, setSelectedTech] = useState([]);
   const [allTechnologies, setAllTechnologies] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/projects');
-        setProjects(response.data);
+        console.log('Fetching projects from:', `${API_URL}/api/projects`);
+        const response = await axios.get(`${API_URL}/api/projects`, {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          }
+        });
+        console.log('Projects response:', response.data);
+        setProjects(response.data.projects || []);
         // Extract unique technologies
         const techs = new Set();
-        response.data.forEach((project) => {
+        response.data.projects.forEach((project) => {
           project.technologies.forEach((tech) => techs.add(tech));
         });
         setAllTechnologies(Array.from(techs));
-      } catch (error) {
-        console.error('Error fetching projects:', error);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching projects:', err);
+        setError(err.message);
+        setLoading(false);
       }
     };
 
     fetchProjects();
   }, []);
-
-  const filteredProjects = projects.filter((project) =>
-    selectedTech.length === 0
-      ? true
-      : selectedTech.every((tech) => project.technologies.includes(tech))
-  );
 
   const toggleTechnology = (tech) => {
     setSelectedTech((prev) =>
@@ -156,6 +147,34 @@ export default function Projects() {
         : [...prev, tech]
     );
   };
+
+  const filteredProjects = projects.filter((project) =>
+    selectedTech.length === 0
+      ? true
+      : project.technologies.some((tech) => selectedTech.includes(tech))
+  );
+
+  if (loading) {
+    return (
+      <Container maxW={'7xl'} py={12}>
+        <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
+          <Heading fontSize={'3xl'}>My Projects</Heading>
+          <Text>Loading projects...</Text>
+        </Stack>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container maxW={'7xl'} py={12}>
+        <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
+          <Heading fontSize={'3xl'}>My Projects</Heading>
+          <Text color="red.500">Error loading projects: {error}</Text>
+        </Stack>
+      </Container>
+    );
+  }
 
   return (
     <Container maxW={'7xl'} py={12}>
@@ -175,7 +194,7 @@ export default function Projects() {
               size="md"
               borderRadius="full"
               variant={selectedTech.includes(tech) ? 'solid' : 'outline'}
-              colorScheme="brand"
+              colorScheme="blue"
               cursor="pointer"
               onClick={() => toggleTechnology(tech)}
             >
@@ -187,10 +206,12 @@ export default function Projects() {
       </Stack>
 
       <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10}>
-        {filteredProjects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+        {filteredProjects.map((project, index) => (
+          <ProjectCard key={index} project={project} />
         ))}
       </SimpleGrid>
     </Container>
   );
-} 
+};
+
+export default Projects; 
