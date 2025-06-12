@@ -61,7 +61,7 @@ const ProjectCard = ({ project }) => {
         <Text color={descriptionColor}>{project.description}</Text>
 
         <Stack direction={'row'} spacing={2} mt={4}>
-          {project.technologies.map((tech, i) => (
+          {(project.technologies || []).map((tech, i) => (
             <Tag
               key={i}
               size="sm"
@@ -119,7 +119,9 @@ const Projects = ({ projects: initialProjects = [] }) => {
       // Extract unique technologies from initial projects
       const techs = new Set();
       initialProjects.forEach((project) => {
-        project.technologies.forEach((tech) => techs.add(tech));
+        if (project && project.technologies) {
+          project.technologies.forEach((tech) => techs.add(tech));
+        }
       });
       setAllTechnologies(Array.from(techs));
       return;
@@ -134,11 +136,19 @@ const Projects = ({ projects: initialProjects = [] }) => {
           }
         });
         console.log('Projects response:', response.data);
-        setProjects(response.data.projects || []);
+        
+        // Ensure we have an array of projects
+        const projectsData = Array.isArray(response.data) ? response.data : 
+                           (response.data.projects || []);
+        
+        setProjects(projectsData);
+        
         // Extract unique technologies
         const techs = new Set();
-        response.data.projects.forEach((project) => {
-          project.technologies.forEach((tech) => techs.add(tech));
+        projectsData.forEach((project) => {
+          if (project && project.technologies) {
+            project.technologies.forEach((tech) => techs.add(tech));
+          }
         });
         setAllTechnologies(Array.from(techs));
         setLoading(false);
@@ -163,7 +173,7 @@ const Projects = ({ projects: initialProjects = [] }) => {
   const filteredProjects = projects.filter((project) =>
     selectedTech.length === 0
       ? true
-      : project.technologies.some((tech) => selectedTech.includes(tech))
+      : project.technologies && project.technologies.some((tech) => selectedTech.includes(tech))
   );
 
   if (loading) {
