@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "title": "AI-Powered Physiotherapy Chatbot",
+        "description": "An intelligent query system using fine-tuned PubMedBERT for physiotherapy-related questions. Features secure login and intelligent preprocessing.",
+        "technologies": ["React", "Flask", "PubMedBERT", "Python"],
+        "image": "/assets/chatbot.png",
+        "github": "https://github.com/NamanBordia/AI-physiotherapy-chatbot.git",
+        "live": "https://physio-chatbot.vercel.app"
+    },
+    {
+        "id": 2,
+        "title": "NoCodeML Tool",
+        "description": "A user-friendly tool that allows users to upload CSV files, select ML models, and train them without writing code. Supports both regression and classification tasks.",
+        "technologies": ["React", "FastAPI", "Python", "Machine Learning"],
+        "image": "/assets/nocodeml.png",
+        "github": "https://github.com/NamanBordia/nocodeml",
+        "live": "https://nocodeml.vercel.app"
+    },
+    {
+        "id": 3,
+        "title": "Project H2O",
+        "description": "An ML-based water quality analyzer focused on sustainability and health. Helps in monitoring and analyzing water quality parameters.",
+        "technologies": ["Flask", "Machine Learning", "Python", "Data Analysis"],
+        "image": "/assets/h2o.png",
+        "github": "https://github.com/NamanBordia/project-h2o.git",
+        "live": "https://project-h2o.vercel.app"
+    },
+    {
+        "id": 4,
+        "title": "Automatic Door Locking System",
+        "description": "An IoT-based smartphone-controlled smart lock system for enhanced home security.",
+        "technologies": ["IoT", "Arduino", "Mobile App", "Hardware"],
+        "image": "/assets/universal.png",
+        "github": "https://github.com/NamanBordia/Automatic-door-locking-system.git",
+        "live": null
+    }
+] 

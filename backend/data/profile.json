@@ -1,0 +1,38 @@
+[
+    {
+        "question": "What is your name?",
+        "answer": "I'm Naman Bordia."
+    },
+    {
+        "question": "What is your education?",
+        "answer": "I'm currently pursuing B.Tech (Hons.) in Computer Science and Engineering at RV University, Bangalore, with a specialization in AI/ML and a minor in Fintech. My current GPA is 8.965."
+    },
+    {
+        "question": "What are your skills?",
+        "answer": "I have expertise in various technologies including:\n- Languages: Python, C, Java, C++, Solidity, HTML, CSS, JavaScript, SQL\n- Blockchain: Solidity, Ethereum, Smart Contracts\n- Frameworks: React.js, Node.js, Flask, Bootstrap\n- Tools: MongoDB, Docker, Git, VS Code\n- ML: NumPy, Pandas, Matplotlib, Supervised/Unsupervised Learning\n- Others: DSA, OS, CN, AWS, Agile, DevOps"
+    },
+    {
+        "question": "What are your certifications?",
+        "answer": "I have several certifications including:\n- Machine Learning Specialization from Coursera\n- Big Data Foundations from IBM SkillBuild\n- Agile Scrum Foundation from Simplilearn\n- Generative AI in Action from IBM SkillBuild"
+    },
+    {
+        "question": "What languages do you know?",
+        "answer": "I am fluent in Hindi (Native) and English (Full Professional Proficiency)."
+    },
+    {
+        "question": "What is your work experience?",
+        "answer": "I have worked at CVCSI Research Center, RV University in 2024, where I contributed to data preprocessing and synthetic data generation for ML tasks."
+    },
+    {
+        "question": "What are your notable projects?",
+        "answer": "Some of my notable projects include:\n1. AI-Powered Physiotherapy Chatbot (React + Flask)\n2. NoCodeML Tool (React + FastAPI)\n3. Project H2O (Flask + ML)\n4. Automatic Door Locking System (IoT)"
+    },
+    {
+        "question": "What are your achievements?",
+        "answer": "My achievements include:\n- Participation in hackathons and coding contests\n- Consistent performance in DSA contests (LeetCode, Codeforces)\n- Built multiple full-stack projects as part of self-learning"
+    },
+    {
+        "question": "How can I contact you?",
+        "answer": "You can reach me through:\n- Email: namanbordia@gmail.com\n- Phone: +91 9351061670\n- GitHub: NamanBordia\n- LinkedIn: naman-bordia"
+    }
+] 
