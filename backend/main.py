@@ -10,6 +10,7 @@ import torch
 import numpy as np
 import gc
 import logging
+import time
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -24,12 +25,7 @@ app = FastAPI(
 # CORS middleware configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",  # Local development
-        "https://*.vercel.app",   # All Vercel preview deployments
-        "https://portfolio-frontend-*.vercel.app",  # Your Vercel domain
-        "https://your-portfolio.vercel.app"  # Your production Vercel domain
-    ],
+    allow_origins=["*"],  # Allow all origins for now
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -38,24 +34,56 @@ app.add_middleware(
 # Initialize model and tokenizer as None
 model = None
 tokenizer = None
+model_loaded = False
 
 def load_model():
-    global model, tokenizer
+    global model, tokenizer, model_loaded
     try:
+        if model_loaded:
+            return True
+            
         logger.info("Loading BERT model...")
         tokenizer = AutoTokenizer.from_pretrained('prajjwal1/bert-mini')
         model = AutoModel.from_pretrained('prajjwal1/bert-mini')
         model.eval()
         model = model.to('cpu')
+        model_loaded = True
         logger.info("BERT model loaded successfully!")
+        return True
     except Exception as e:
         logger.error(f"Error loading model: {str(e)}")
-        raise
+        model_loaded = False
+        return False
 
 # Load model on startup
 @app.on_event("startup")
 async def startup_event():
+    # Try to load model, but don't fail if it doesn't load
     load_model()
+
+# Root endpoint
+@app.get("/")
+async def root():
+    return {
+        "status": "ok",
+        "message": "Welcome to Portfolio Backend API",
+        "endpoints": {
+            "profile": "/api/profile",
+            "projects": "/api/projects",
+            "chat": "/api/chat",
+            "contact": "/api/contact"
+        },
+        "docs": "/docs"
+    }
+
+# Health check endpoint
+@app.get("/health")
+async def health_check():
+    return {
+        "status": "ok",
+        "model_loaded": model_loaded,
+        "timestamp": time.time()
+    }
 
 # Pydantic models
 class ContactForm(BaseModel):
@@ -105,8 +133,9 @@ def load_context_data():
 # Generate BERT embeddings with memory optimization
 def get_bert_embedding(text: str) -> np.ndarray:
     try:
-        if model is None or tokenizer is None:
-            load_model()
+        if not model_loaded:
+            if not load_model():
+                raise Exception("Model not loaded")
             
         # Tokenize with smaller max length
         inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True, max_length=64)
@@ -140,6 +169,9 @@ def cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
 # Find most relevant context
 def find_relevant_context(question: str, contexts: List[Dict]) -> str:
     try:
+        if not model_loaded:
+            return "I'm sorry, the AI model is still loading. Please try again in a few moments."
+            
         question_embedding = get_bert_embedding(question)
         
         max_similarity = -1
@@ -211,29 +243,6 @@ async def get_projects():
     except Exception as e:
         logger.error(f"Error in projects endpoint: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
-
-# Root endpoint
-@app.get("/")
-async def root():
-    return {
-        "status": "ok",
-        "message": "Welcome to Portfolio Backend API",
-        "endpoints": {
-            "profile": "/api/profile",
-            "projects": "/api/projects",
-            "chat": "/api/chat",
-            "contact": "/api/contact"
-        },
-        "docs": "/docs"
-    }
-
-# Health check endpoint
-@app.get("/health")
-async def health_check():
-    return {
-        "status": "ok",
-        "model_loaded": model is not None and tokenizer is not None
-    }
 
 if __name__ == "__main__":
     import uvicorn
