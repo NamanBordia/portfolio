@@ -23,14 +23,16 @@ import { motion } from 'framer-motion';
 
 const MotionBox = motion(Box);
 
-const API_URL = 'https://portfolio-backend-1slt.onrender.com';
-
 const ProjectCard = ({ project }) => {
+  const textColor = useColorModeValue('gray.700', 'white');
+  const bgColor = useColorModeValue('white', 'gray.800');
+  const descriptionColor = useColorModeValue('gray.500', 'gray.400');
+
   return (
     <MotionBox
       whileHover={{ y: -5 }}
       transition={{ duration: 0.3 }}
-      bg={useColorModeValue('white', 'gray.800')}
+      bg={bgColor}
       boxShadow={'xl'}
       rounded={'md'}
       overflow={'hidden'}
@@ -50,13 +52,13 @@ const ProjectCard = ({ project }) => {
 
       <Stack p={6}>
         <Heading
-          color={useColorModeValue('gray.700', 'white')}
+          color={textColor}
           fontSize={'2xl'}
           fontFamily={'body'}
         >
           {project.title}
         </Heading>
-        <Text color={'gray.500'}>{project.description}</Text>
+        <Text color={descriptionColor}>{project.description}</Text>
 
         <Stack direction={'row'} spacing={2} mt={4}>
           {project.technologies.map((tech, i) => (
@@ -104,18 +106,28 @@ const ProjectCard = ({ project }) => {
   );
 };
 
-const Projects = () => {
-  const [projects, setProjects] = useState([]);
+const Projects = ({ projects: initialProjects = [] }) => {
+  const [projects, setProjects] = useState(initialProjects);
   const [selectedTech, setSelectedTech] = useState([]);
   const [allTechnologies, setAllTechnologies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!initialProjects.length);
   const [error, setError] = useState(null);
+  const textColor = useColorModeValue('gray.600', 'gray.400');
 
   useEffect(() => {
+    if (initialProjects.length > 0) {
+      // Extract unique technologies from initial projects
+      const techs = new Set();
+      initialProjects.forEach((project) => {
+        project.technologies.forEach((tech) => techs.add(tech));
+      });
+      setAllTechnologies(Array.from(techs));
+      return;
+    }
+
     const fetchProjects = async () => {
       try {
-        console.log('Fetching projects from:', `${API_URL}/api/projects`);
-        const response = await axios.get(`${API_URL}/api/projects`, {
+        const response = await axios.get('https://portfolio-backend-1slt.onrender.com/api/projects', {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -138,7 +150,7 @@ const Projects = () => {
     };
 
     fetchProjects();
-  }, []);
+  }, [initialProjects]);
 
   const toggleTechnology = (tech) => {
     setSelectedTech((prev) =>
@@ -180,7 +192,7 @@ const Projects = () => {
     <Container maxW={'7xl'} py={12}>
       <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'} mb={10}>
         <Heading fontSize={'3xl'}>My Projects</Heading>
-        <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize={'xl'}>
+        <Text color={textColor} fontSize={'xl'}>
           A showcase of my recent work and personal projects
         </Text>
       </Stack>
