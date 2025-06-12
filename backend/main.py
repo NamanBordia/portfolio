@@ -8,6 +8,7 @@ import os
 from transformers import AutoTokenizer, AutoModel
 import torch
 import numpy as np
+import gc
 
 app = FastAPI()
 
@@ -15,18 +16,24 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000",  
-        "https://your-vercel-domain.vercel.app",  
-        "https://*.vercel.app"  
-    ],  
+        "http://localhost:3000",  # Local development
+        "https://your-vercel-domain.vercel.app",  # Vercel frontend URL
+        "https://*.vercel.app"  # All Vercel preview deployments
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Load BERT model and tokenizer
-tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
-model = AutoModel.from_pretrained('bert-base-uncased')
+# Load smaller BERT model and tokenizer
+print("Loading BERT model...")
+tokenizer = AutoTokenizer.from_pretrained('prajjwal1/bert-mini')
+model = AutoModel.from_pretrained('prajjwal1/bert-mini')
+
+# Set model to evaluation mode and move to CPU
+model.eval()
+model = model.to('cpu')
+print("BERT model loaded successfully!")
 
 # Pydantic models
 class ContactForm(BaseModel):
@@ -61,13 +68,29 @@ def load_context_data():
     except FileNotFoundError:
         return None
 
-# Generate BERT embeddings
+# Generate BERT embeddings with memory optimization
 def get_bert_embedding(text: str) -> np.ndarray:
-    inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True, max_length=512)
+    # Tokenize with smaller max length
+    inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True, max_length=64)
+    
+    # Move inputs to CPU
+    inputs = {k: v.to('cpu') for k, v in inputs.items()}
+    
+    # Generate embeddings with no_grad
     with torch.no_grad():
         outputs = model(**inputs)
+    
     # Use [CLS] token embedding as sentence embedding
-    return outputs.last_hidden_state[:, 0, :].numpy().flatten()  # Flatten the array
+    embedding = outputs.last_hidden_state[:, 0, :].numpy().flatten()
+    
+    # Clear memory
+    del outputs
+    del inputs
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+    
+    return embedding
 
 # Calculate cosine similarity
 def cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
