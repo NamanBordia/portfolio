@@ -15,7 +15,11 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI()
+app = FastAPI(
+    title="Portfolio Backend API",
+    description="Backend API for Naman's Portfolio",
+    version="1.0.0"
+)
 
 # CORS middleware configuration
 app.add_middleware(
@@ -207,6 +211,29 @@ async def get_projects():
     except Exception as e:
         logger.error(f"Error in projects endpoint: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
+
+# Root endpoint
+@app.get("/")
+async def root():
+    return {
+        "status": "ok",
+        "message": "Welcome to Portfolio Backend API",
+        "endpoints": {
+            "profile": "/api/profile",
+            "projects": "/api/projects",
+            "chat": "/api/chat",
+            "contact": "/api/contact"
+        },
+        "docs": "/docs"
+    }
+
+# Health check endpoint
+@app.get("/health")
+async def health_check():
+    return {
+        "status": "ok",
+        "model_loaded": model is not None and tokenizer is not None
+    }
 
 if __name__ == "__main__":
     import uvicorn
