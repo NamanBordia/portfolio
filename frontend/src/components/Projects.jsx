@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Projects.css';
 
 const Projects = ({ projects }) => {
-  const defaultImage = '/assets/default-project.png'; // We'll add this image
+  const defaultImage = '/assets/logo2.png';
+
+  if (!projects || projects.length === 0) {
+    return (
+      <div className="projects-container">
+        <h2>My Projects</h2>
+        <p>Loading projects...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="projects-container">
