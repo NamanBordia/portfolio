@@ -75,6 +75,9 @@ export default function Chatbot() {
     e.preventDefault();
     if (!input.trim()) return;
 
+    // Add user's message to the messages array
+    const userMessage = { text: input, isUser: true };
+    setMessages(prev => [...prev, userMessage]);
     setIsLoading(true);
     setError('');
 
@@ -91,10 +94,15 @@ export default function Chatbot() {
       console.log('Chat response:', response.data);
       setAnswer(response.data.answer);
       setInput('');
-      setMessages((prev) => [...prev, { text: response.data.answer, isUser: false }]);
+      setMessages(prev => [...prev, { text: response.data.answer, isUser: false }]);
     } catch (err) {
       console.error('Error in chat:', err);
       setError(err.message);
+      // Add error message to chat
+      setMessages(prev => [...prev, { 
+        text: "Sorry, I encountered an error. Please try again.", 
+        isUser: false 
+      }]);
     } finally {
       setIsLoading(false);
     }
