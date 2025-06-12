@@ -1,8 +1,0 @@
-[build]
-builder = "nixpacks"
-buildCommand = "python -m pip install -r backend/requirements.txt"
-
-[deploy]
-startCommand = "cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT"
-healthcheckPath = "/api/profile"
-healthcheckTimeout = 100 
