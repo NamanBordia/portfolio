@@ -9,7 +9,7 @@ import Chat from './components/Chat';
 import './App.css';
 
 // API URL configuration
-const API_URL = process.env.REACT_APP_API_URL || 'https://portfolio-backend-1slt.onrender.com';
+const API_URL = 'https://portfolio-backend-1slt.onrender.com';
 console.log('Current API URL:', API_URL); // Debug log
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
-          mode: 'cors', // Add CORS mode
+          mode: 'cors',
         });
         
         console.log('Profile response status:', profileResponse.status);
@@ -56,7 +56,7 @@ function App() {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
-          mode: 'cors', // Add CORS mode
+          mode: 'cors',
         });
         
         console.log('Projects response status:', projectsResponse.status);
@@ -68,7 +68,7 @@ function App() {
         
         const projectsData = await projectsResponse.json();
         console.log('Projects data received:', projectsData);
-        setProjects(projectsData);
+        setProjects(projectsData.projects || []); // Access the projects array from the response
 
         setLoading(false);
       } catch (err) {
