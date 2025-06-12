@@ -21,7 +21,12 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('Fetching profile data from:', `${API_URL}/api/profile`); // Debug log
+        // Test API connection first
+        console.log('Testing API connection...');
+        const testResponse = await fetch(`${API_URL}/health`);
+        console.log('API health check response:', await testResponse.json());
+
+        console.log('Fetching profile data from:', `${API_URL}/api/profile`);
         // Fetch profile data
         const profileResponse = await fetch(`${API_URL}/api/profile`, {
           method: 'GET',
@@ -29,16 +34,21 @@ function App() {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
+          mode: 'cors', // Add CORS mode
         });
-        console.log('Profile response status:', profileResponse.status); // Debug log
+        
+        console.log('Profile response status:', profileResponse.status);
         if (!profileResponse.ok) {
-          throw new Error(`Failed to fetch profile data: ${profileResponse.status}`);
+          const errorText = await profileResponse.text();
+          console.error('Profile error response:', errorText);
+          throw new Error(`Failed to fetch profile data: ${profileResponse.status} - ${errorText}`);
         }
+        
         const profileData = await profileResponse.json();
-        console.log('Profile data received:', profileData); // Debug log
+        console.log('Profile data received:', profileData);
         setProfile(profileData);
 
-        console.log('Fetching projects data from:', `${API_URL}/api/projects`); // Debug log
+        console.log('Fetching projects data from:', `${API_URL}/api/projects`);
         // Fetch projects data
         const projectsResponse = await fetch(`${API_URL}/api/projects`, {
           method: 'GET',
@@ -46,13 +56,18 @@ function App() {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
+          mode: 'cors', // Add CORS mode
         });
-        console.log('Projects response status:', projectsResponse.status); // Debug log
+        
+        console.log('Projects response status:', projectsResponse.status);
         if (!projectsResponse.ok) {
-          throw new Error(`Failed to fetch projects data: ${projectsResponse.status}`);
+          const errorText = await projectsResponse.text();
+          console.error('Projects error response:', errorText);
+          throw new Error(`Failed to fetch projects data: ${projectsResponse.status} - ${errorText}`);
         }
+        
         const projectsData = await projectsResponse.json();
-        console.log('Projects data received:', projectsData); // Debug log
+        console.log('Projects data received:', projectsData);
         setProjects(projectsData);
 
         setLoading(false);
@@ -71,6 +86,7 @@ function App() {
       <div className="loading">
         <h2>Loading...</h2>
         <p>Please wait while we fetch your data...</p>
+        <p>API URL: {API_URL}</p>
       </div>
     );
   }
@@ -80,6 +96,7 @@ function App() {
       <div className="error">
         <h2>Error Loading Data</h2>
         <p>{error}</p>
+        <p>API URL: {API_URL}</p>
         <p>Please try refreshing the page or contact support if the problem persists.</p>
       </div>
     );
