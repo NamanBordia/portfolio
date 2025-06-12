@@ -10,7 +10,7 @@ import './App.css';
 
 // API URL configuration
 const API_URL = process.env.REACT_APP_API_URL || 'https://portfolio-backend-1slt.onrender.com';
-console.log('API URL:', API_URL); // Debug log
+console.log('Current API URL:', API_URL); // Debug log
 
 function App() {
   const [profile, setProfile] = useState(null);
@@ -21,26 +21,38 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('Fetching profile data...'); // Debug log
+        console.log('Fetching profile data from:', `${API_URL}/api/profile`); // Debug log
         // Fetch profile data
-        const profileResponse = await fetch(`${API_URL}/api/profile`);
-        console.log('Profile response:', profileResponse); // Debug log
+        const profileResponse = await fetch(`${API_URL}/api/profile`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });
+        console.log('Profile response status:', profileResponse.status); // Debug log
         if (!profileResponse.ok) {
-          throw new Error('Failed to fetch profile data');
+          throw new Error(`Failed to fetch profile data: ${profileResponse.status}`);
         }
         const profileData = await profileResponse.json();
-        console.log('Profile data:', profileData); // Debug log
+        console.log('Profile data received:', profileData); // Debug log
         setProfile(profileData);
 
-        console.log('Fetching projects data...'); // Debug log
+        console.log('Fetching projects data from:', `${API_URL}/api/projects`); // Debug log
         // Fetch projects data
-        const projectsResponse = await fetch(`${API_URL}/api/projects`);
-        console.log('Projects response:', projectsResponse); // Debug log
+        const projectsResponse = await fetch(`${API_URL}/api/projects`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        });
+        console.log('Projects response status:', projectsResponse.status); // Debug log
         if (!projectsResponse.ok) {
-          throw new Error('Failed to fetch projects data');
+          throw new Error(`Failed to fetch projects data: ${projectsResponse.status}`);
         }
         const projectsData = await projectsResponse.json();
-        console.log('Projects data:', projectsData); // Debug log
+        console.log('Projects data received:', projectsData); // Debug log
         setProjects(projectsData);
 
         setLoading(false);
@@ -55,11 +67,22 @@ function App() {
   }, []);
 
   if (loading) {
-    return <div className="loading">Loading...</div>;
+    return (
+      <div className="loading">
+        <h2>Loading...</h2>
+        <p>Please wait while we fetch your data...</p>
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="error">Error: {error}</div>;
+    return (
+      <div className="error">
+        <h2>Error Loading Data</h2>
+        <p>{error}</p>
+        <p>Please try refreshing the page or contact support if the problem persists.</p>
+      </div>
+    );
   }
 
   return (
