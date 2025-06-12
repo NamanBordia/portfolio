@@ -13,5 +13,5 @@ services:
         value: 1
       - key: TRANSFORMERS_CACHE
         value: /tmp/transformers_cache
-    healthCheckPath: /api/profile
+    healthCheckPath: /health
     autoDeploy: true 
