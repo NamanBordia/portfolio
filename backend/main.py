@@ -25,9 +25,15 @@ app = FastAPI(
 # CORS middleware configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:3001", 
+        "https://portfolio-livid-mu-60.vercel.app",
+        "https://*.vercel.app",
+        "*"
+    ],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
     expose_headers=["*"]
 )
@@ -59,8 +65,10 @@ def load_model():
 # Load model on startup
 @app.on_event("startup")
 async def startup_event():
-    # Try to load model, but don't fail if it doesn't load
-    load_model()
+    # Don't load model on startup for free tier
+    # It will be loaded on first request if needed
+    logger.info("Backend started. Model will be loaded on demand.")
+    pass
 
 # Root endpoint
 @app.get("/")
