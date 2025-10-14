@@ -22,6 +22,8 @@ import axios from 'axios';
 
 const MotionBox = motion(Box);
 
+const API_URL = 'https://portfolio-backend-1slt.onrender.com';
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: '',
@@ -43,7 +45,13 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      await axios.post('http://localhost:8000/api/contact', formData);
+      console.log('Sending contact form to:', `${API_URL}/api/contact`);
+      await axios.post(`${API_URL}/api/contact`, formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      console.log('Contact form sent successfully');
       toast({
         title: 'Message sent!',
         description: "I'll get back to you soon.",
@@ -53,9 +61,10 @@ export default function Contact() {
       });
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
+      console.error('Error sending contact form:', error);
       toast({
         title: 'Error',
-        description: 'Something went wrong. Please try again.',
+        description: 'Failed to send message. Please try again.',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -68,9 +77,9 @@ export default function Contact() {
   return (
     <Container maxW={'7xl'} py={12}>
       <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'} mb={10}>
-        <Heading fontSize={'3xl'}>Get in Touch</Heading>
+        <Heading fontSize={'3xl'}>Contact Me</Heading>
         <Text color={useColorModeValue('gray.600', 'gray.400')} fontSize={'xl'}>
-          Have a question or want to work together? Feel free to contact me!
+          Have a question or want to work together? Feel free to reach out!
         </Text>
       </Stack>
 
@@ -134,8 +143,10 @@ export default function Contact() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
+                    placeholder="Your name"
                   />
                 </FormControl>
+
                 <FormControl isRequired>
                   <FormLabel>Email</FormLabel>
                   <Input
@@ -143,20 +154,24 @@ export default function Contact() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
+                    placeholder="Your email"
                   />
                 </FormControl>
+
                 <FormControl isRequired>
                   <FormLabel>Message</FormLabel>
                   <Textarea
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
+                    placeholder="Your message"
                     rows={6}
                   />
                 </FormControl>
+
                 <Button
                   type="submit"
-                  colorScheme="brand"
+                  colorScheme="blue"
                   size="lg"
                   width="full"
                   isLoading={isSubmitting}

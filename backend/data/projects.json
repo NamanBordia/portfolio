@@ -1,6 +1,15 @@
 [
     {
         "id": 1,
+        "title": "Community Issue Reporting Platform",
+        "description": "A full-stack web application for citizens to report and track civic issues like potholes, broken streetlights, and waste management. Features real-time issue mapping, admin dashboard with analytics, upvoting system, and image uploads via Cloudinary.",
+        "technologies": ["React", "Flask", "MySQL", "Leaflet", "JWT", "Cloudinary", "TailwindCSS"],
+        "image": "/assets/community-reporting.png",
+        "github": "https://github.com/NamanBordia/Community-Reporting-Platfrom",
+        "live": "https://community-issue-reporting-platform-6e9ekc0zd.vercel.app"
+    },
+    {
+        "id": 2,
         "title": "AI-Powered Physiotherapy Chatbot",
         "description": "An intelligent query system using fine-tuned PubMedBERT for physiotherapy-related questions. Features secure login and intelligent preprocessing.",
         "technologies": ["React", "Flask", "PubMedBERT", "Python"],
@@ -9,7 +18,7 @@
         "live": "https://physio-chatbot.vercel.app"
     },
     {
-        "id": 2,
+        "id": 3,
         "title": "NoCodeML Tool",
         "description": "A user-friendly tool that allows users to upload CSV files, select ML models, and train them without writing code. Supports both regression and classification tasks.",
         "technologies": ["React", "FastAPI", "Python", "Machine Learning"],
@@ -18,7 +27,7 @@
         "live": "https://nocodeml.vercel.app"
     },
     {
-        "id": 3,
+        "id": 4,
         "title": "Project H2O",
         "description": "An ML-based water quality analyzer focused on sustainability and health. Helps in monitoring and analyzing water quality parameters.",
         "technologies": ["Flask", "Machine Learning", "Python", "Data Analysis"],
@@ -27,7 +36,7 @@
         "live": "https://project-h2o.vercel.app"
     },
     {
-        "id": 4,
+        "id": 5,
         "title": "Automatic Door Locking System",
         "description": "An IoT-based smartphone-controlled smart lock system for enhanced home security.",
         "technologies": ["IoT", "Arduino", "Mobile App", "Hardware"],

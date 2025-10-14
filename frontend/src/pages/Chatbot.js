@@ -20,6 +20,8 @@ import axios from 'axios';
 
 const MotionBox = motion(Box);
 
+const API_URL = 'https://portfolio-backend-1slt.onrender.com';
+
 const Message = ({ message, isUser }) => {
   const userBg = useColorModeValue('brand.500', 'brand.600');
   const botBg = useColorModeValue('gray.100', 'gray.700');
@@ -58,6 +60,8 @@ export default function Chatbot() {
   const messagesEndRef = useRef(null);
   const bgColor = useColorModeValue('white', 'gray.800');
   const scrollbarBg = useColorModeValue('gray.200', 'gray.600');
+  const [answer, setAnswer] = useState('');
+  const [error, setError] = useState('');
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -71,30 +75,37 @@ export default function Chatbot() {
     e.preventDefault();
     if (!input.trim()) return;
 
-    const userMessage = input.trim();
-    setInput('');
-    setMessages((prev) => [...prev, { text: userMessage, isUser: true }]);
+    // Add user's message to the messages array
+    const userMessage = { text: input, isUser: true };
+    setMessages(prev => [...prev, userMessage]);
     setIsLoading(true);
+    setError('');
 
     try {
-      const response = await axios.post('http://localhost:8000/api/chat', {
-        question: userMessage,
-      });
-      setMessages((prev) => [
-        ...prev,
-        { text: response.data.answer, isUser: false },
-      ]);
-    } catch (error) {
-      setMessages((prev) => [
-        ...prev,
+      console.log('Sending chat question to:', `${API_URL}/api/chat`);
+      const response = await axios.post(`${API_URL}/api/chat`, 
+        { question: input },
         {
-          text: 'Sorry, I encountered an error. Please try again.',
-          isUser: false,
-        },
-      ]);
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        }
+      );
+      console.log('Chat response:', response.data);
+      setAnswer(response.data.answer);
+      setInput('');
+      setMessages(prev => [...prev, { text: response.data.answer, isUser: false }]);
+    } catch (err) {
+      console.error('Error in chat:', err);
+      setError(err.message);
+      // Add error message to chat
+      setMessages(prev => [...prev, { 
+        text: "Sorry, I encountered an error. Please try again.", 
+        isUser: false 
+      }]);
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsLoading(false);
   };
 
   return (
@@ -146,7 +157,8 @@ export default function Chatbot() {
             </VStack>
           </Box>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="chat-form">
+            {error && <div className="error-message">{error}</div>}
             <HStack>
               <Input
                 value={input}
@@ -165,6 +177,13 @@ export default function Chatbot() {
           </form>
         </VStack>
       </Box>
+
+      {answer && (
+        <div className="answer-container">
+          <h3>Answer:</h3>
+          <p>{answer}</p>
+        </div>
+      )}
     </Container>
   );
 } 
