@@ -45,26 +45,37 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      console.log('Sending contact form to:', `${API_URL}/api/contact`);
-      await axios.post(`${API_URL}/api/contact`, formData, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-      console.log('Contact form sent successfully');
+      // Create email subject and body
+      const subject = encodeURIComponent(`Portfolio Contact from ${formData.name}`);
+      const body = encodeURIComponent(
+        `Name: ${formData.name}\n` +
+        `Email: ${formData.email}\n\n` +
+        `Message:\n${formData.message}`
+      );
+      
+      // Create mailto link
+      const mailtoLink = `mailto:namanbordia@gmail.com?subject=${subject}&body=${body}`;
+      
+      // Open default email client
+      window.location.href = mailtoLink;
+      
       toast({
-        title: 'Message sent!',
-        description: "I'll get back to you soon.",
+        title: 'Opening email client!',
+        description: "Your default email app will open with the message.",
         status: 'success',
         duration: 5000,
         isClosable: true,
       });
-      setFormData({ name: '', email: '', message: '' });
+      
+      // Reset form after a short delay
+      setTimeout(() => {
+        setFormData({ name: '', email: '', message: '' });
+      }, 1000);
     } catch (error) {
-      console.error('Error sending contact form:', error);
+      console.error('Error opening email client:', error);
       toast({
         title: 'Error',
-        description: 'Failed to send message. Please try again.',
+        description: 'Failed to open email client. Please try again.',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -115,7 +126,7 @@ export default function Contact() {
                 </HStack>
                 <HStack>
                   <Icon as={FaLinkedin} w={6} h={6} color={'brand.500'} />
-                  <Text>linkedin.com/in/naman-bordia</Text>
+                  <Text>https://www.linkedin.com/in/naman-bordia-bbb609281/</Text>
                 </HStack>
               </VStack>
             </Box>
