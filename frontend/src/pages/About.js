@@ -10,7 +10,6 @@ import {
   useColorModeValue,
   VStack,
   HStack,
-  Badge,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { FaGraduationCap, FaBriefcase, FaCode, FaAward } from 'react-icons/fa';

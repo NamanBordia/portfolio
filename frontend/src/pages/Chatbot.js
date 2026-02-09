@@ -7,7 +7,6 @@ import {
   VStack,
   HStack,
   Input,
-  Button,
   useColorModeValue,
   Flex,
   Avatar,

@@ -20,14 +20,8 @@ import {
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaPhone } from 'react-icons/fa';
 import { SiLeetcode } from 'react-icons/si';
-import axios from 'axios';
 
 const MotionBox = motion(Box);
-
-// API URL configuration - use Render backend URL in production
-const API_URL = process.env.NODE_ENV === 'development' 
-  ? 'http://localhost:8000'
-  : 'https://portfolio-backend-1slt.onrender.com';
 
 export default function Contact() {
   const [formData, setFormData] = useState({

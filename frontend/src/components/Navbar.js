@@ -4,10 +4,8 @@ import {
   Flex,
   Text,
   IconButton,
-  Button,
   Stack,
   Collapse,
-  Icon,
   Link,
   useColorModeValue,
   useBreakpointValue,
@@ -17,7 +15,6 @@ import {
 import {
   HamburgerIcon,
   CloseIcon,
-  ChevronDownIcon,
   MoonIcon,
   SunIcon,
 } from '@chakra-ui/icons';
