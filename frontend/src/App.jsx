@@ -8,8 +8,10 @@ import Contact from './components/Contact';
 import Chat from './components/Chat';
 import './App.css';
 
-// API URL configuration
-const API_URL = 'https://portfolio-backend-1slt.onrender.com';
+// API URL configuration - use Render backend URL in production
+const API_URL = process.env.NODE_ENV === 'development' 
+  ? 'http://localhost:8000'
+  : 'https://portfolio-backend-1slt.onrender.com';
 console.log('Current API URL:', API_URL); // Debug log
 
 function App() {
@@ -68,7 +70,7 @@ function App() {
         
         const projectsData = await projectsResponse.json();
         console.log('Projects data received:', projectsData);
-        setProjects(projectsData.projects || []); // Access the projects array from the response
+        setProjects(projectsData || []); // Backend returns the array directly
 
         setLoading(false);
       } catch (err) {

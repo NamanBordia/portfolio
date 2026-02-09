@@ -11,6 +11,10 @@
   ],
   "routes": [
     {
+      "src": "/api/chat",
+      "dest": "/frontend/api/chat.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "/frontend/$1"
     }

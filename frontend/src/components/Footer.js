@@ -8,6 +8,7 @@ import {
   Link,
 } from '@chakra-ui/react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { SiLeetcode } from 'react-icons/si';
 
 export default function Footer() {
   return (
@@ -24,13 +25,16 @@ export default function Footer() {
         justify={{ base: 'center', md: 'space-between' }}
         align={{ base: 'center', md: 'center' }}
       >
-        <Text>© 2025 Naman Bordia. All rights reserved</Text>
+        <Text>© 2026 Naman Bordia. All rights reserved</Text>
         <Stack direction={'row'} spacing={6}>
           <Link href={'https://github.com/NamanBordia'} isExternal>
             <FaGithub size={24} />
           </Link>
           <Link href={'https://www.linkedin.com/in/naman-bordia-bbb609281/'} isExternal>
             <FaLinkedin size={24} />
+          </Link>
+          <Link href={'https://leetcode.com/u/Naman_Bordia/'} isExternal>
+            <SiLeetcode size={24} />
           </Link>
         </Stack>
       </Container>

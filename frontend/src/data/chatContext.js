@@ -1,4 +1,4 @@
-[
+export const profileData = [
     {
         "question": "What is your name?",
         "answer": "I'm Naman Bordia."
@@ -35,4 +35,21 @@
         "question": "How can I contact you?",
         "answer": "You can reach me through:\n- Email: namanbordia@gmail.com\n- Phone: +91 9351061670\n- GitHub: NamanBordia\n- LinkedIn: naman-bordia"
     }
-] 
+];
+
+export const contextData = {
+    "contexts": [
+        {
+            "text": "Tell me about yourself",
+            "response": "I'm Naman Bordia, a B.Tech (Hons.) Computer Science student at RV University specializing in AI/ML. I have a strong passion for building intelligent systems, particularly RAG-based applications and deep learning models. I've published research on PhysioRAG and worked as a Frontend Intern at Governaice, a UC Berkeley startup. My technical expertise spans Python, React.js, Flask, and ML frameworks like LangChain and ChromaDB."
+        },
+        {
+            "text": "What are you currently working on?",
+            "response": "I'm currently focused on advancing my research in Retrieval-Augmented Generation systems and exploring production-grade full-stack development. I recently completed my work at Governaice (UC Berkeley startup) where I designed scalable frontend architectures using React.js."
+        },
+        {
+            "text": "What is your strongest skill?",
+            "response": "My strongest skills lie in building intelligent AI systems, particularly RAG-based applications. I have hands-on experience with PubMedBERT embeddings, ChromaDB vector databases, and LangChain for building production-grade AI systems. I'm also proficient in full-stack development with React.js and Flask, allowing me to build end-to-end solutions."
+        }
+    ]
+};

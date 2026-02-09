@@ -84,13 +84,30 @@ export default function About() {
               borderWidth="1px"
               borderRadius="lg"
               bg={useColorModeValue('white', 'gray.800')}
+              mb={3}
             >
-              <HStack spacing={4}>
+              <HStack spacing={4} align="start">
                 <Icon as={FaBriefcase} w={6} h={6} color={'brand.500'} />
-                <VStack align="start">
-                  <Text fontWeight="bold">CVCSI Research Center, RV University</Text>
-                  <Text>2024</Text>
-                  <Text>Contributed to data preprocessing and synthetic data generation for ML tasks</Text>
+                <VStack align="start" spacing={1}>
+                  <Text fontWeight="bold">Frontend Intern - Governaice (UC Berkeley Startup)</Text>
+                  <Text fontSize="sm" color={useColorModeValue('gray.600', 'gray.400')}>Remote | 2025</Text>
+                  <Text fontSize="sm" mt={2}>Designed scalable frontend architecture using React.js for production-grade web platform</Text>
+                </VStack>
+              </HStack>
+            </Box>
+            <Box
+              p={5}
+              shadow="md"
+              borderWidth="1px"
+              borderRadius="lg"
+              bg={useColorModeValue('white', 'gray.800')}
+            >
+              <HStack spacing={4} align="start">
+                <Icon as={FaBriefcase} w={6} h={6} color={'brand.500'} />
+                <VStack align="start" spacing={1}>
+                  <Text fontWeight="bold">Research Intern - CVCSI Research Center, RV University</Text>
+                  <Text fontSize="sm" color={useColorModeValue('gray.600', 'gray.400')}>Bangalore | 2024</Text>
+                  <Text fontSize="sm" mt={2}>Data distillation and synthetic data generation for ML training efficiency</Text>
                 </VStack>
               </HStack>
             </Box>
@@ -106,17 +123,17 @@ export default function About() {
         <Feature
           icon={FaCode}
           title={'Programming Languages'}
-          text={'Python, C, Java, C++, Solidity, HTML, CSS, JavaScript, SQL'}
+          text={'Python, Java, C++, C, JavaScript, SQL, Solidity'}
         />
         <Feature
           icon={FaCode}
-          title={'Frameworks & Tools'}
-          text={'React.js, Node.js, Flask, Bootstrap, MongoDB, Docker, Git, VS Code'}
+          title={'Frameworks & Libraries'}
+          text={'React.js, Node.js, Flask, LangChain, NumPy, Pandas, ChromaDB, MongoDB, Docker'}
         />
         <Feature
           icon={FaCode}
-          title={'AI/ML & Others'}
-          text={'NumPy, Pandas, Matplotlib, Supervised/Unsupervised Learning, DSA, OS, CN, AWS, Agile, DevOps'}
+          title={'AI/ML & Systems'}
+          text={'RAG, Deep Learning (LSTM), PubMedBERT, IoT, REST APIs, AWS, Git, Agile, DSA, DBMS'}
         />
       </SimpleGrid>
 
@@ -124,7 +141,7 @@ export default function About() {
         <Heading fontSize={'2xl'}>Certifications</Heading>
       </Stack>
 
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} mt={5}>
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={10} mt={5}>
         <Feature
           icon={FaAward}
           title={'Machine Learning Specialization'}
@@ -132,18 +149,30 @@ export default function About() {
         />
         <Feature
           icon={FaAward}
-          title={'Big Data Foundations'}
-          text={'IBM SkillBuild'}
+          title={'Design & Implementation of HCI'}
+          text={'NPTEL'}
         />
         <Feature
           icon={FaAward}
-          title={'Agile Scrum Foundation'}
-          text={'Simplilearn'}
+          title={'Programming in Modern C++'}
+          text={'NPTEL'}
+        />
+      </SimpleGrid>
+
+      <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'} mt={10}>
+        <Heading fontSize={'2xl'}>Achievements</Heading>
+      </Stack>
+
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} mt={5}>
+        <Feature
+          icon={FaAward}
+          title={'Research Publication - PhysioRAG'}
+          text={'Paper accepted via EDAS (2025) - Achieved 0.89 Faithfulness score'}
         />
         <Feature
           icon={FaAward}
-          title={'Generative AI in Action'}
-          text={'IBM SkillBuild'}
+          title={'Research Submission - Synthetic Data Generation'}
+          text={'Paper submitted to IEEE RECAP 2026 (under review) - 3× F1-score improvement'}
         />
       </SimpleGrid>
     </Container>

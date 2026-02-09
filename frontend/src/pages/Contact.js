@@ -15,14 +15,19 @@ import {
   HStack,
   Icon,
   useToast,
+  Link,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope, FaPhone } from 'react-icons/fa';
+import { SiLeetcode } from 'react-icons/si';
 import axios from 'axios';
 
 const MotionBox = motion(Box);
 
-const API_URL = 'https://portfolio-backend-1slt.onrender.com';
+// API URL configuration - use Render backend URL in production
+const API_URL = process.env.NODE_ENV === 'development' 
+  ? 'http://localhost:8000'
+  : 'https://portfolio-backend-1slt.onrender.com';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -44,44 +49,28 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    try {
-      // Create email subject and body
-      const subject = encodeURIComponent(`Portfolio Contact from ${formData.name}`);
-      const body = encodeURIComponent(
-        `Name: ${formData.name}\n` +
-        `Email: ${formData.email}\n\n` +
-        `Message:\n${formData.message}`
-      );
-      
-      // Create mailto link
-      const mailtoLink = `mailto:namanbordia@gmail.com?subject=${subject}&body=${body}`;
-      
-      // Open default email client
-      window.location.href = mailtoLink;
-      
-      toast({
-        title: 'Opening email client!',
-        description: "Your default email app will open with the message.",
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
-      
-      // Reset form after a short delay
-      setTimeout(() => {
-        setFormData({ name: '', email: '', message: '' });
-      }, 1000);
-    } catch (error) {
-      console.error('Error opening email client:', error);
-      toast({
-        title: 'Error',
-        description: 'Failed to open email client. Please try again.',
-        status: 'error',
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-
+    // Create email subject and body
+    const subject = encodeURIComponent(`Portfolio Contact from ${formData.name}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    );
+    
+    // Use Gmail compose URL - works universally on desktop and mobile
+    const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=namanbordia@gmail.com&su=${subject}&body=${body}`;
+    
+    // Open in new tab
+    window.open(gmailLink, '_blank');
+    
+    toast({
+      title: 'Opening Gmail!',
+      description: "Gmail will open in a new tab with your pre-filled message.",
+      status: 'success',
+      duration: 5000,
+      isClosable: true,
+    });
+    
+    // Reset form
+    setFormData({ name: '', email: '', message: '' });
     setIsSubmitting(false);
   };
 
@@ -114,19 +103,33 @@ export default function Contact() {
               <VStack spacing={4} align="stretch">
                 <HStack>
                   <Icon as={FaEnvelope} w={6} h={6} color={'brand.500'} />
-                  <Text>namanbordia@gmail.com</Text>
+                  <Link href="mailto:namanbordia@gmail.com" color="white" _hover={{ textDecoration: 'underline' }}>
+                    namanbordia@gmail.com
+                  </Link>
                 </HStack>
                 <HStack>
                   <Icon as={FaPhone} w={6} h={6} color={'brand.500'} />
-                  <Text>+91 9351061670</Text>
+                  <Link href="tel:+919351061670" color="white" _hover={{ textDecoration: 'underline' }}>
+                    +91 9351061670
+                  </Link>
                 </HStack>
                 <HStack>
                   <Icon as={FaGithub} w={6} h={6} color={'brand.500'} />
-                  <Text>github.com/NamanBordia</Text>
+                  <Link href="https://github.com/NamanBordia" isExternal color="white" _hover={{ textDecoration: 'underline' }}>
+                    github.com/NamanBordia
+                  </Link>
                 </HStack>
                 <HStack>
                   <Icon as={FaLinkedin} w={6} h={6} color={'brand.500'} />
-                  <Text>https://www.linkedin.com/in/naman-bordia-bbb609281/</Text>
+                  <Link href="https://www.linkedin.com/in/naman-bordia-bbb609281/" isExternal color="white" _hover={{ textDecoration: 'underline' }}>
+                    linkedin.com/in/naman-bordia
+                  </Link>
+                </HStack>
+                <HStack>
+                  <Icon as={SiLeetcode} w={6} h={6} color={'brand.500'} />
+                  <Link href="https://leetcode.com/u/Naman_Bordia/" isExternal color="white" _hover={{ textDecoration: 'underline' }}>
+                    leetcode.com/Naman_Bordia
+                  </Link>
                 </HStack>
               </VStack>
             </Box>

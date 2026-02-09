@@ -2,23 +2,23 @@
   "contexts": [
     {
       "text": "What is Naman's educational background?",
-      "response": "Naman is currently pursuing a B.Tech (Hons.) in Computer Science and Engineering at RV University, Bangalore. He has a GPA of 8.965 and is expected to graduate in 2027."
+      "response": "Naman is currently pursuing a B.Tech (Hons.) in Computer Science and Engineering at RV University, Bangalore (2023-2027). He has a GPA of 8.965/10.0. His coursework includes Data Structures & Algorithms, Operating Systems, DBMS, Computer Networks, and Software Engineering."
     },
     {
       "text": "What are Naman's technical skills?",
-      "response": "Naman has expertise in various programming languages including Python, C, Java, C++, Solidity, HTML, CSS, JavaScript, and SQL. He is also proficient in frameworks and tools like React.js, Node.js, Flask, Bootstrap, MongoDB, Docker, Git, and VS Code. Additionally, he has experience in AI/ML with NumPy, Pandas, Matplotlib, and both supervised and unsupervised learning."
+      "response": "Naman has expertise in Languages (Python, Java, C++, C, JavaScript, SQL, Solidity), Core CS concepts (Data Structures & Algorithms, OOP, Operating Systems, DBMS, Computer Networks), Frameworks & Libraries (React.js, Node.js, Flask, NumPy, Pandas, LangChain), Systems & Tools (Docker, Git, MongoDB, ChromaDB, AWS, REST APIs), and advanced Concepts (Software Engineering, Distributed Systems, RAG, Deep Learning with LSTM, IoT, Agile)."
     },
     {
       "text": "What certifications does Naman have?",
-      "response": "Naman has several certifications including Machine Learning Specialization from Coursera, Big Data Foundations from IBM SkillBuild, Agile Scrum Foundation from Simplilearn, and Generative AI in Action from IBM SkillBuild."
+      "response": "Naman has several certifications including Machine Learning Specialization from Coursera, Design & Implementation of Human-Computer Interfaces from NPTEL, and Programming in Modern C++ from NPTEL."
     },
     {
       "text": "What is Naman's work experience?",
-      "response": "Naman has worked at the CVCSI Research Center at RV University in 2024, where he contributed to data preprocessing and synthetic data generation for ML tasks."
+      "response": "Naman has two main work experiences: (1) Frontend Intern at Governaice (UC Berkeley Startup) in 2025, where he designed and developed scalable frontend architecture using React.js for a production-grade web platform, collaborated with cross-functional stakeholders, and improved responsiveness and page performance. (2) Research Intern at CVCSI Research Center, RV University in 2024, where he worked on data distillation and synthetic data generation to improve ML training efficiency."
     },
     {
       "text": "What are Naman's areas of specialization?",
-      "response": "Naman specializes in AI/ML and has a minor in Fintech. He is experienced in Blockchain Development, Full Stack Development, and Machine Learning. He also has knowledge in DSA, OS, CN, AWS, Agile, and DevOps methodologies."
+      "response": "Naman specializes in AI/ML with particular expertise in Retrieval-Augmented Generation (RAG) systems, Deep Learning (LSTM), Software Engineering, Full Stack Development (React.js, Flask, Node.js), and IoT systems. He has knowledge in Data Structures & Algorithms, Operating Systems, Computer Networks, Distributed Systems, and Agile methodologies."
     },
     {
       "text": "How can I contact Naman?",
@@ -26,11 +26,11 @@
     },
     {
       "text": "What projects has Naman worked on?",
-      "response": "Naman has worked on various projects in AI/ML, Blockchain, and Full Stack Development. You can find more details about his projects in the Projects section of his portfolio."
+      "response": "Naman has worked on various impactful projects including PhysioRAG (a RAG system with 0.89 Faithfulness score using 20,000+ PubMed articles), Real-Time Predictive Maintenance System (IoT + LSTM for fault detection), Community Issue Reporting Platform (React + Flask with RESTful APIs), and Automatic Door Locking System (IoT security system). You can find more details about his projects in the Projects section of his portfolio."
     },
     {
       "text": "What is Naman's current role?",
-      "response": "Naman is currently a B.Tech CSE student at RV University, Bangalore, with a specialization in AI/ML and a minor in Fintech. He is also working as a researcher at the CVCSI Research Center."
+      "response": "Naman is currently a B.Tech CSE student at RV University, Bangalore (2023-2027), with a specialization in AI/ML. He recently completed a Frontend Intern role at Governaice (UC Berkeley Startup) in 2025 and previously worked as a Research Intern at the CVCSI Research Center in 2024."
     },
     {
       "text": "Where is Naman from?",
@@ -42,7 +42,7 @@
     },
     {
       "text": "What is Naman's age?",
-      "response": "Naman is 18 years old (as of 2024)."
+      "response": "Naman is 20 years old (born July 18, 2005)."
     },
     {
       "text": "What are Naman's hobbies and interests?",
@@ -50,11 +50,11 @@
     },
     {
       "text": "What programming languages is Naman most comfortable with?",
-      "response": "Naman is most comfortable with Python, JavaScript, and Java. He uses Python extensively for AI/ML projects, JavaScript for web development, and Java for general programming tasks."
+      "response": "Naman is most comfortable with Python, JavaScript, and Java. He uses Python extensively for AI/ML projects, RAG systems, IoT with Flask backends, and research work. JavaScript is used for full-stack web development with React.js and Node.js, and he has solid fundamentals in Java and C++ for core CS concepts."
     },
     {
       "text": "What is Naman's experience with AI/ML?",
-      "response": "Naman has completed the Machine Learning Specialization from Coursera and has practical experience with NumPy, Pandas, and Matplotlib. He has worked on both supervised and unsupervised learning projects and has contributed to research at the CVCSI Research Center."
+      "response": "Naman has extensive AI/ML experience including completing the Machine Learning Specialization from Coursera. He has worked on supervised and unsupervised learning, deep learning with LSTM for time-series forecasting, RAG systems with PubMedBERT embeddings, and synthetic data generation using CTGAN with LLM validation. He has practical research experience at CVCSI Research Center and published research in the field."
     },
     {
       "text": "What is Naman's experience with blockchain development?",
@@ -66,11 +66,11 @@
     },
     {
       "text": "What are Naman's career goals?",
-      "response": "Naman aims to become a leading expert in AI/ML and blockchain technology. He is particularly interested in applying these technologies to solve real-world problems in fintech and other domains."
+      "response": "Naman aims to become a leading expert in AI/ML, particularly in Retrieval-Augmented Generation (RAG) systems, deep learning, and production-grade software engineering. He is interested in applying these technologies to solve real-world problems, building scalable systems, and contributing to research that bridges academic innovation with practical applications."
     },
     {
       "text": "What is Naman's experience with web development?",
-      "response": "Naman is proficient in full-stack web development, with expertise in React.js for frontend development and Node.js for backend development. He also has experience with HTML, CSS, and various web development frameworks."
+      "response": "Naman is proficient in full-stack web development with expertise in React.js for frontend and Flask/Node.js for backend. He has built production-grade applications at Governaice (UC Berkeley Startup), developed multiple full-stack projects including the Community Issue Reporting Platform with RESTful APIs and role-based access control. He focuses on scalability, performance, and user experience."
     },
     {
       "text": "What is Naman's experience with databases?",
@@ -94,7 +94,7 @@
     },
     {
       "text": "What is Naman's experience with generative AI?",
-      "response": "Naman has completed the Generative AI in Action certification from IBM SkillBuild and has practical experience working with generative AI models and applications."
+      "response": "Naman has practical research experience with generative AI. He worked on synthetic data generation using CTGAN (Conditional Tabular GAN) combined with LLM-based semantic validation for rare event prediction. He also has experience with RAG systems using LLMs for query transformation and response generation, focusing on hallucination mitigation and reliability."
     },
     {
       "text": "What is Naman's experience with research?",
@@ -195,6 +195,62 @@
     {
       "text": "What is Naman's experience with hackathons?",
       "response": "Naman has participated in various hackathons, where he has developed innovative solutions under time constraints. These experiences have helped him improve his problem-solving and rapid prototyping skills."
+    },
+    {
+      "text": "What research experience does Naman have?",
+      "response": "Naman has significant research experience: (1) Synthetic Data Generation for Rare Event Prediction (2024-2025) - Proposed a hybrid framework combining CTGAN with LLM-based semantic validation, achieving a 3× improvement in minority-class F1-score. Paper submitted to IEEE RECAP 2026 (under review). (2) PhysioRAG: Evidence-Based Physiotherapy Conversational AI (2025) - Peer-reviewed research paper accepted via EDAS, presenting a domain-specific RAG system."
+    },
+    {
+      "text": "What is PhysioRAG?",
+      "response": "PhysioRAG is Naman's research project on Evidence-Based Physiotherapy Conversational AI. It's a modular Retrieval-Augmented Generation (RAG) system grounded in peer-reviewed medical literature, built from 20,000+ PubMed Central articles using PubMedBERT embeddings and ChromaDB. The system achieved 0.89 Faithfulness (RAGAS) with significant gains in Precision@5 and Recall@5. The research paper was accepted via EDAS. It prioritizes hallucination mitigation, reliability, and citation-grounded responses for clinical safety."
+    },
+    {
+      "text": "What is Naman's synthetic data generation research about?",
+      "response": "Naman's synthetic data generation research (2024-2025) proposes a hybrid framework combining CTGAN with LLM-based semantic validation. It uses LLMs as reasoning engines to convert natural-language business rules into executable data constraints, addressing semantic blindness in generative models for highly imbalanced datasets. The research achieved a 3× improvement in minority-class F1-score compared to baseline models. The paper has been submitted to IEEE RECAP 2026 and is under review."
+    },
+    {
+      "text": "What publications does Naman have?",
+      "response": "Naman has two research publications: (1) PhysioRAG: Evidence-Based Physiotherapy Conversational AI - Peer-reviewed paper accepted via EDAS (2025), and (2) Synthetic Data Generation for Rare Event Prediction - Paper submitted to IEEE RECAP 2026 (currently under review)."
+    },
+    {
+      "text": "What is Naman's experience with RAG systems?",
+      "response": "Naman has extensive experience with Retrieval-Augmented Generation (RAG) systems. He developed PhysioRAG, a domain-specific RAG system that achieved 0.89 Faithfulness score. He built a large-scale knowledge base from 20,000+ PubMed Central articles using PubMedBERT embeddings and ChromaDB, implemented LLM-based query transformation, and focused on hallucination mitigation and citation-grounded responses."
+    },
+    {
+      "text": "What is Naman's experience with deep learning?",
+      "response": "Naman has practical experience with deep learning, particularly LSTM (Long Short-Term Memory) networks. He built a Real-Time Predictive Maintenance System using LSTM models for multi-step time-series forecasting. He also worked with PubMedBERT embeddings for his PhysioRAG project and has experience with supervised and unsupervised learning techniques."
+    },
+    {
+      "text": "What is Naman's experience with IoT?",
+      "response": "Naman has hands-on experience with IoT systems. He built a Real-Time Predictive Maintenance System using ESP32 sensors to monitor vibration and temperature, implemented live dashboards for monitoring, and developed an Automatic Door Locking System - a smartphone-controlled IoT security system with secure device control and real-time status monitoring."
+    },
+    {
+      "text": "What is the Governaice internship about?",
+      "response": "Naman worked as a Frontend Intern at Governaice, a UC Berkeley Startup, remotely in 2025. He designed and developed scalable frontend architecture using React.js for a production-grade web platform, collaborated with cross-functional stakeholders to translate product requirements into performant UI components, and improved responsiveness and page performance, enhancing user experience across devices."
+    },
+    {
+      "text": "What is Naman's experience with production systems?",
+      "response": "Naman has experience building production-grade systems through his Frontend Intern role at Governaice (UC Berkeley Startup), where he developed scalable frontend architecture for a production web platform. He has also built multiple full-stack applications with focus on scalability, usability, and data consistency."
+    },
+    {
+      "text": "What is Naman's experience with LLMs?",
+      "response": "Naman has experience working with Large Language Models (LLMs). In his synthetic data generation research, he used LLMs as reasoning engines to convert natural-language business rules into executable data constraints. He also implemented LLM-based query transformation in his PhysioRAG system to bridge layperson queries and biomedical terminology."
+    },
+    {
+      "text": "What is Naman's Real-Time Predictive Maintenance System?",
+      "response": "Naman's Real-Time Predictive Maintenance System (2025) is an IoT + Deep Learning project. It uses ESP32 sensors to collect real-time vibration and temperature data, features a Flask-based backend serving LSTM models for multi-step time-series forecasting, and includes live dashboards and monitoring for improved observability and early fault detection."
+    },
+    {
+      "text": "What is Naman's Community Issue Reporting Platform?",
+      "response": "Naman's Community Issue Reporting Platform (2025) is a full-stack web application for reporting and tracking community issues. It implements RESTful APIs, role-based access control, and admin management tools, with a focus on scalability, usability, and data consistency. Built with React and Flask."
+    },
+    {
+      "text": "What databases has Naman worked with?",
+      "response": "Naman has worked with both SQL and NoSQL databases. He used MySQL for his Community Issue Reporting Platform and MongoDB for various projects. He also has experience with ChromaDB, a vector database used for storing embeddings in his PhysioRAG system."
+    },
+    {
+      "text": "What is Naman's portfolio website?",
+      "response": "Naman's portfolio website is available at portfolio-livid-mu-60.vercel.app, where you can find information about his projects, experience, skills, and contact details."
     }
   ]
 } 

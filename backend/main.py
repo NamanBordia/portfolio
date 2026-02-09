@@ -5,12 +5,15 @@ from typing import List, Optional, Dict
 import json
 from difflib import get_close_matches
 import os
-from transformers import AutoTokenizer, AutoModel
-import torch
-import numpy as np
-import gc
 import logging
 import time
+from groq import Groq
+from dotenv import load_dotenv
+from pathlib import Path
+
+# Load environment variables from backend/.env
+env_path = Path(__file__).parent / '.env'
+load_dotenv(dotenv_path=env_path)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -38,36 +41,19 @@ app.add_middleware(
     expose_headers=["*"]
 )
 
-# Initialize model and tokenizer as None
-model = None
-tokenizer = None
-model_loaded = False
+# Configure Groq API
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+groq_client = None
+if GROQ_API_KEY:
+    groq_client = Groq(api_key=GROQ_API_KEY)
+    logger.info("Groq API configured successfully!")
+else:
+    logger.warning("GROQ_API_KEY not found in environment variables")
 
-def load_model():
-    global model, tokenizer, model_loaded
-    try:
-        if model_loaded:
-            return True
-            
-        logger.info("Loading BERT model...")
-        tokenizer = AutoTokenizer.from_pretrained('prajjwal1/bert-mini')
-        model = AutoModel.from_pretrained('prajjwal1/bert-mini')
-        model.eval()
-        model = model.to('cpu')
-        model_loaded = True
-        logger.info("BERT model loaded successfully!")
-        return True
-    except Exception as e:
-        logger.error(f"Error loading model: {str(e)}")
-        model_loaded = False
-        return False
-
-# Load model on startup
+# Startup event
 @app.on_event("startup")
 async def startup_event():
-    # Don't load model on startup for free tier
-    # It will be loaded on first request if needed
-    logger.info("Backend started. Model will be loaded on demand.")
+    logger.info("Backend started with Groq API.")
     pass
 
 # Root endpoint
@@ -90,7 +76,8 @@ async def root():
 async def health_check():
     return {
         "status": "ok",
-        "model_loaded": model_loaded,
+        "groq_configured": GROQ_API_KEY is not None,
+        "groq_client_exists": groq_client is not None,
         "timestamp": time.time()
     }
 
@@ -106,7 +93,8 @@ class ChatRequest(BaseModel):
 # Load profile data
 def load_profile_data():
     try:
-        with open("data/profile.json", "r") as f:
+        file_path = Path(__file__).parent / "data" / "profile.json"
+        with open(file_path, "r") as f:
             return json.load(f)
     except FileNotFoundError:
         logger.error("Profile data file not found")
@@ -118,7 +106,8 @@ def load_profile_data():
 # Load projects data
 def load_projects_data():
     try:
-        with open("data/projects.json", "r") as f:
+        file_path = Path(__file__).parent / "data" / "projects.json"
+        with open(file_path, "r") as f:
             return json.load(f)
     except FileNotFoundError:
         logger.error("Projects data file not found")
@@ -130,7 +119,8 @@ def load_projects_data():
 # Load context data
 def load_context_data():
     try:
-        with open('data/context.json', 'r') as f:
+        file_path = Path(__file__).parent / "data" / "context.json"
+        with open(file_path, 'r') as f:
             return json.load(f)
     except FileNotFoundError:
         logger.error("Context data file not found")
@@ -139,84 +129,177 @@ def load_context_data():
         logger.error(f"Error loading context data: {str(e)}")
         return None
 
-# Generate BERT embeddings with memory optimization
-def get_bert_embedding(text: str) -> np.ndarray:
+# Build comprehensive context from all data sources
+def build_complete_context() -> str:
+    """Build a complete context string from profile, projects, and context data."""
+    context_parts = []
+    
+    # Load and add profile data
+    profile_data = load_profile_data()
+    if profile_data:
+        context_parts.append("=== PROFILE INFORMATION ===")
+        for item in profile_data:
+            context_parts.append(f"Q: {item['question']}\nA: {item['answer']}")
+    
+    # Load and add projects data
+    projects_data = load_projects_data()
+    if projects_data:
+        context_parts.append("\n=== PROJECTS ===")
+        for project in projects_data:
+            tech_stack = ", ".join(project.get('technologies', []))
+            project_info = f"""
+Project: {project['title']}
+Description: {project['description']}
+Technologies: {tech_stack}
+GitHub: {project.get('github', 'N/A')}
+Live Demo: {project.get('live', 'N/A')}
+"""
+            context_parts.append(project_info)
+    
+    # Load and add context data
+    context_data = load_context_data()
+    if context_data and 'contexts' in context_data:
+        context_parts.append("\n=== ADDITIONAL CONTEXT ===")
+        for ctx in context_data['contexts']:
+            context_parts.append(f"Q: {ctx['text']}\nA: {ctx['response']}")
+    
+    return "\n\n".join(context_parts)
+
+# Conversational chatbot using Groq with full context
+def chat_with_groq(question: str) -> str:
+    print(f"=== CHAT_WITH_GROQ CALLED with question: {question} ===")
+    print(f"=== groq_client is None: {groq_client is None} ===")
     try:
-        if not model_loaded:
-            if not load_model():
-                raise Exception("Model not loaded")
-            
-        # Tokenize with smaller max length
-        inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True, max_length=64)
+        if not groq_client:
+            print("!!! groq_client is None, returning error message !!!")
+            return "I'm sorry, the AI service is not configured. Please contact the administrator."
         
-        # Move inputs to CPU
-        inputs = {k: v.to('cpu') for k, v in inputs.items()}
+        print("=== Building context... ===")
+        # Build complete context
+        full_context = build_complete_context()
         
-        # Generate embeddings with no_grad
-        with torch.no_grad():
-            outputs = model(**inputs)
+        print("=== Creating system prompt... ===")
+        # Create conversational system prompt
+        system_prompt = f"""You are Naman Bordia's intelligent AI assistant on his portfolio website. You have complete knowledge about Naman's background, experience, skills, projects, and achievements.
+
+COMPLETE INFORMATION ABOUT NAMAN:
+{full_context}
+
+YOUR PERSONALITY & BEHAVIOR:
+- You ARE Naman speaking in first person (use "I", "my", "me")
+- Be warm, friendly, and conversational like a real person
+- Show enthusiasm when talking about projects and achievements
+- Be natural - use casual language when appropriate
+- If asked about something not in the context, politely say you don't have that specific information
+- Keep responses concise but informative (2-4 sentences for simple questions, more for complex ones)
+- Feel free to add personality and context to your answers
+- If greeted (hi, hello, hey), respond warmly and offer to help
+
+REMEMBER:
+- You are Naman Bordia, a B.Tech CSE student specializing in AI/ML
+- You have research publications and work experience at a UC Berkeley startup
+- You're passionate about RAG systems, deep learning, and full-stack development
+- Answer as if YOU are the person being asked about"""
         
-        # Use [CLS] token embedding as sentence embedding
-        embedding = outputs.last_hidden_state[:, 0, :].numpy().flatten()
+        # Generate response using Groq
+        chat_completion = groq_client.chat.completions.create(
+            messages=[
+                {
+                    "role": "system",
+                    "content": system_prompt
+                },
+                {
+                    "role": "user",
+                    "content": question
+                }
+            ],
+            model="llama-3.3-70b-versatile",  # Fast and capable model
+            temperature=0.7,
+            max_tokens=1024,
+        )
         
-        # Clear memory
-        del outputs
-        del inputs
-        gc.collect()
-        if torch.cuda.is_available():
-            torch.cuda.empty_cache()
+        return chat_completion.choices[0].message.content.strip()
         
-        return embedding
     except Exception as e:
-        logger.error(f"Error generating embedding: {str(e)}")
-        raise
+        print(f"ERROR IN CHAT_WITH_GROQ: {str(e)}")  # Add console print
+        logger.error(f"Error with Groq API: {str(e)}")
+        logger.exception("Full traceback:")
+        import traceback
+        traceback.print_exc()  # Print full traceback to console
+        return "I'm sorry, I'm having trouble responding right now. Could you please try again?"
 
-# Calculate cosine similarity
-def cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
-    return float(np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b)))
-
-# Find most relevant context
-def find_relevant_context(question: str, contexts: List[Dict]) -> str:
+# Fallback function using simple keyword matching
+def fallback_context_search(question: str, contexts: List[Dict]) -> str:
     try:
-        if not model_loaded:
-            return "I'm sorry, the AI model is still loading. Please try again in a few moments."
-            
-        question_embedding = get_bert_embedding(question)
-        
-        max_similarity = -1
-        most_relevant_context = ""
+        question_lower = question.lower()
+        best_match = None
+        max_score = 0
         
         for context in contexts:
-            context_embedding = get_bert_embedding(context["text"])
-            similarity = cosine_similarity(question_embedding, context_embedding)
+            # Simple keyword matching
+            context_text = context["text"].lower()
+            score = sum(word in context_text for word in question_lower.split())
             
-            if similarity > max_similarity:
-                max_similarity = similarity
-                most_relevant_context = context["response"]
+            if score > max_score:
+                max_score = score
+                best_match = context["response"]
         
-        return most_relevant_context
+        if best_match:
+            return best_match
+        else:
+            return "I'm sorry, I don't have enough information to answer that question. Please try asking about Naman's experience, skills, education, or projects."
     except Exception as e:
-        logger.error(f"Error finding relevant context: {str(e)}")
+        logger.error(f"Error in fallback search: {str(e)}")
         return "I'm sorry, I'm having trouble processing your question right now. Please try again later."
 
 # Chat endpoint
 @app.post("/api/chat")
 async def chat(request: ChatRequest):
     try:
-        context_data = load_context_data()
-        if not context_data:
-            raise HTTPException(status_code=500, detail="Context data not found")
+        if not groq_client:
+            return {"answer": "AI service not configured. Please contact administrator."}
         
-        # Find relevant context
-        response = find_relevant_context(request.question, context_data["contexts"])
+        # Build complete context
+        try:
+            full_context = build_complete_context()
+            if not full_context:
+                return {"answer": "ERROR: Context is empty!"}
+        except Exception as ctx_error:
+            return {"answer": f"ERROR building context: {str(ctx_error)}"}
         
-        if not response:
-            response = "I'm sorry, I don't have enough information to answer that question. Please try asking something else about Naman's experience, skills, or projects."
+        # Create system prompt
+        system_prompt = f"""You are Naman Bordia's AI assistant. You have complete knowledge about Naman's background, experience, skills, projects, and achievements.
+
+INFORMATION ABOUT NAMAN:
+{full_context}
+
+PERSONALITY:
+- Speak in first person (use "I", "my", "me")
+- Be warm, friendly, and conversational
+- Show enthusiasm about projects and achievements
+- Keep responses concise (2-4 sentences for simple questions)
+- If greeted, respond warmly and offer to help
+
+You are Naman Bordia, a B.Tech CSE student specializing in AI/ML with research publications and work experience at a UC Berkeley startup."""
         
-        return {"answer": response}
+        # Generate response - using smaller/faster model to save tokens
+        chat_completion = groq_client.chat.completions.create(
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": request.question}
+            ],
+            model="llama-3.1-8b-instant",  # Smaller model, faster, fewer tokens
+            temperature=0.7,
+            max_tokens=512,  # Reduced from 1024 to save tokens
+        )
+        
+        return {"answer": chat_completion.choices[0].message.content.strip()}
+        
     except Exception as e:
-        logger.error(f"Error in chat endpoint: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+        # Check if rate limit error
+        if "rate_limit" in str(e).lower() or "429" in str(e):
+            return {"answer": "I'm taking a quick break! The free API limit has been reached. Please try again in about an hour, or contact Naman directly via the contact form."}
+        return {"answer": f"I'm sorry, I'm having trouble responding right now. Could you please try again?"}
 
 # Contact form endpoint
 @app.post("/api/contact")
