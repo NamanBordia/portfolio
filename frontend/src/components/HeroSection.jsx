@@ -3,6 +3,7 @@ import { FiArrowDown, FiArrowUpRight } from 'react-icons/fi';
 import { FaGithub, FaLinkedinIn } from 'react-icons/fa';
 import { SiLeetcode } from 'react-icons/si';
 import profile from '../data/profile.json';
+import EmailContact from './EmailContact';
 
 const socialLinks = [
   { label: 'GitHub', icon: FaGithub, href: profile.contact.github },
@@ -28,7 +29,7 @@ export default function HeroSection({ onResumeOpen }) {
           <div className="hero-actions">
             <a href="#projects" className="btn-primary">Explore my work <FiArrowDown size={16} /></a>
             <button onClick={onResumeOpen} className="text-link">Resume <FiArrowUpRight size={16} /></button>
-            <a href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(profile.contact.email)}`} target="_blank" rel="noopener noreferrer" className="text-link">Email me <FiArrowUpRight size={16} /></a>
+            <EmailContact>Email me <FiArrowUpRight size={16} /></EmailContact>
           </div>
         </div>
         <div className="hero-visual">
