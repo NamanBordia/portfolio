@@ -1,75 +1,35 @@
 # Naman Bordia - Portfolio
 
-A modern, responsive portfolio website showcasing my skills, projects, and experience.
+A responsive, single-page portfolio built with React, Tailwind CSS, and Framer Motion.
 
-## Features
+The compact portfolio opens with professional profiles and career highlights, followed by three featured projects, concise experience and research, expandable certifications, and email contact. All seven projects remain available through "View all projects." The resume overlay and AI assistant remain available.
 
-- Responsive design
-- Interactive UI components
-- Project showcase
-- Contact form
-- Blog section
-- Skills and experience display
+## Local development
 
-## Tech Stack
+From `frontend`, run:
 
-### Frontend
-- React.js
-- Tailwind CSS
-- Framer Motion
-- React Router
-
-### Backend
-- Node.js
-- Express.js
-- MongoDB
-- JWT Authentication
-
-## Getting Started
-
-### Prerequisites
-- Node.js (v14 or higher)
-- MongoDB
-- npm or yarn
-
-### Installation
-
-1. Clone the repository
-```bash
-git clone https://github.com/yourusername/portfolio.git
-cd portfolio
-```
-
-2. Install frontend dependencies
-```bash
-cd frontend
-npm install
-```
-
-3. Install backend dependencies
-```bash
-cd ../backend
-npm install
-```
-
-4. Create .env files
-   - Create `.env` in frontend directory
-   - Create `.env` in backend directory
-
-5. Start the development servers
-```bash
-# Start backend (from backend directory)
-npm run dev
-
-# Start frontend (from frontend directory)
+```sh
+npm ci
 npm start
 ```
 
-## Deployment
+To create a production build:
 
-- Frontend: Deployed on Vercel
-- Backend: Deployed on Render
+```sh
+npm run build
+```
 
-## License
+`npm start` serves both the React app and `/api/chat` through `src/setupProxy.js`. Set `GROQ_API_KEY` in `frontend/.env`; Create React App loads it for the Node development server. Keep the name server-side (without a `REACT_APP_` prefix). Restart `npm start` after changing the API, local middleware, or environment variables.
 
-This project is licensed under the MIT License. 
+## Project structure
+
+- `frontend/src/components/`: active portfolio sections, navigation, resume overlay, and chatbot panel.
+- `frontend/src/data/projects.json`: project content.
+- `frontend/public/assets/`: portrait and resume PDF.
+- `frontend/src/data/profile.json`: shared education, skills, experience, publications, and chatbot profile.
+- `frontend/api/chat.js`: active serverless chatbot endpoint, using the shared JSON data.
+- `vercel.json`: repository-level deployment configuration.
+
+The previous Python backend is unused and has been removed. No Python environment or separate backend server is required.
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for deployment notes.

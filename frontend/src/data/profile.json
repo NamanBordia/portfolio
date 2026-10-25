@@ -1,0 +1,125 @@
+{
+  "name": "Naman Bordia",
+  "location": "Bengaluru, India",
+  "summary": "B.Tech (Hons.) Computer Science and Engineering student at RV University specializing in AI & ML. I build full-stack applications, privacy-preserving GenAI pipelines, and citation-grounded RAG systems, with experience in frontend engineering and document data processing.",
+  "education": {
+    "degree": "B.Tech (Hons.), Computer Science and Engineering (AI & ML)",
+    "university": "RV University, Bengaluru",
+    "years": "2023 - 2027",
+    "cgpa": "8.93 / 10"
+  },
+  "skills": [
+    {
+      "title": "Languages & Web",
+      "items": [
+        "Python",
+        "Java",
+        "C++",
+        "JavaScript",
+        "SQL",
+        "C",
+        "HTML",
+        "CSS"
+      ]
+    },
+    {
+      "title": "Core Computer Science",
+      "items": [
+        "Data Structures & Algorithms",
+        "Object-Oriented Programming",
+        "DBMS",
+        "Operating Systems",
+        "Computer Networks"
+      ]
+    },
+    {
+      "title": "Full-Stack & Engineering",
+      "items": [
+        "React.js",
+        "Flask",
+        "REST APIs",
+        "MySQL",
+        "PostgreSQL",
+        "Git",
+        "Docker",
+        "Testing",
+        "Debugging",
+        "Agile"
+      ]
+    },
+    {
+      "title": "GenAI & Machine Learning",
+      "items": [
+        "LangGraph",
+        "LangChain",
+        "RAG",
+        "Semantic Search",
+        "Pinecone",
+        "ChromaDB",
+        "BioBERT",
+        "scikit-learn"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "William O'Neil India Pvt. Ltd.",
+      "role": "Software Development Intern",
+      "location": "Bengaluru",
+      "dates": "Sep - Nov 2026",
+      "description": "Extracted textual and tabular data from PDF documents and converted unstructured information into structured, machine-readable JSON for downstream data processing.",
+      "summary": "Converted textual and tabular PDF data into structured JSON for downstream processing."
+    },
+    {
+      "company": "Governaice (UC Berkeley Startup)",
+      "role": "Frontend Engineering Intern",
+      "location": "Remote",
+      "dates": "Jul - Nov 2025",
+      "description": "Developed reusable, responsive React.js components from Figma designs for a customer-facing web product. Collaborated with engineers through Agile sprint planning and code reviews to integrate UI components and improve the application experience.",
+      "summary": "Built reusable React interfaces from Figma designs, working through Agile sprints and code reviews."
+    },
+    {
+      "company": "CVCSI Research Center, RV University",
+      "role": "Research Intern",
+      "location": "Bangalore",
+      "dates": "2024",
+      "description": "Worked on data distillation and synthetic data generation for ML training efficiency.",
+      "summary": "Researched data distillation and synthetic data generation for efficient ML training."
+    }
+  ],
+  "publications": [
+    {
+      "title": "PhysioRAG - Evidence-Based Physiotherapy Conversational AI",
+      "venue": "IEEE SSD 2026",
+      "description": "Developed a citation-grounded RAG system using LangChain, BioBERT, and ChromaDB over 20,000+ research articles. Earned Best Paper (1st Place) at IEEE SSD 2026, Italy.",
+      "summary": "Best Paper (1st Place), IEEE SSD 2026, Italy. Citation-grounded RAG over 20,000+ articles."
+    },
+    {
+      "title": "Synthetic Data Generation for Rare Event Prediction",
+      "venue": "IEEE RECCAP 2026",
+      "description": "Published in IEEE Xplore (IEEE RECCAP 2026). Developed a CTGAN + LLM synthetic-data pipeline with semantic validation; minority-class F1-score increased by 3×. Presented at IIT Palakkad.",
+      "summary": "Published in IEEE Xplore. CTGAN + LLM pipeline: minority-class F1-score increased by 3×; presented at IIT Palakkad."
+    }
+  ],
+  "certifications": [
+    {
+      "title": "Machine Learning Specialization",
+      "from": "Coursera"
+    },
+    {
+      "title": "Design & Implementation of HCI",
+      "from": "NPTEL"
+    },
+    {
+      "title": "Programming in Modern C++",
+      "from": "NPTEL"
+    }
+  ],
+  "contact": {
+    "email": "namanbordia@gmail.com",
+    "phone": "+91 9351061670",
+    "github": "https://github.com/NamanBordia",
+    "linkedin": "https://www.linkedin.com/in/naman-bordia-bbb609281/",
+    "leetcode": "https://leetcode.com/u/Naman_Bordia/"
+  }
+}

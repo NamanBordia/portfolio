@@ -1,41 +1,61 @@
-import React from 'react';
-import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
-import theme from './theme';
+import React, { useState } from 'react';
+import './index.css';
 
-// Components
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+// SPA Section Components
+import Navbar from './components/Navbar.jsx';
+import HeroSection from './components/HeroSection';
+import AboutSection from './components/AboutSection';
+import ProjectsSection from './components/ProjectsSection';
+import CertificationsSection from './components/CertificationsSection';
+import ResearchSection from './components/ResearchSection';
+import FooterSection from './components/FooterSection';
 
-// Pages
-import Home from './pages/Home';
-import About from './pages/About';
-import Projects from './pages/Projects';
-import Contact from './pages/Contact';
-import Chatbot from './pages/Chatbot';
-import Resume from './pages/Resume';
+// Overlay / Persistent Components
+import ResumeOverlay from './components/ResumeOverlay';
+import ChatbotPanel from './components/ChatbotPanel';
 
 function App() {
+  // Resume overlay state
+  const [isResumeOpen, setIsResumeOpen] = useState(false);
+
+  // Chatbot messages — lifted here so history persists across scrolling
+  const [chatMessages, setChatMessages] = useState([
+    {
+      text: "Hi! I'm Naman's AI assistant. How can I help you today?",
+      isUser: false,
+    },
+  ]);
+
   return (
-    <ChakraProvider theme={theme}>
-      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-      <Router>
-        <Navbar />
-        <AnimatePresence mode="wait">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/resume" element={<Resume />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/chatbot" element={<Chatbot />} />
-          </Routes>
-        </AnimatePresence>
-        <Footer />
-      </Router>
-    </ChakraProvider>
+    <div className="portfolio-shell">
+      {/* Navigation */}
+      <Navbar onResumeOpen={() => setIsResumeOpen(true)} />
+
+      {/* Main Sectioned Content */}
+      <main>
+        <HeroSection onResumeOpen={() => setIsResumeOpen(true)} />
+        <ProjectsSection />
+        <AboutSection />
+        <ResearchSection />
+        <CertificationsSection />
+      </main>
+
+      {/* Footer */}
+      <FooterSection />
+
+      {/* Resume Full-Screen Overlay */}
+      <ResumeOverlay
+        isOpen={isResumeOpen}
+        onClose={() => setIsResumeOpen(false)}
+      />
+
+      {/* Persistent Chatbot FAB + Panel */}
+      <ChatbotPanel
+        messages={chatMessages}
+        setMessages={setChatMessages}
+      />
+    </div>
   );
 }
 
-export default App; 
+export default App;

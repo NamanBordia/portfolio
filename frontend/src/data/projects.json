@@ -1,0 +1,124 @@
+[
+  {
+    "id": 1,
+    "title": "PhysioRAG: Evidence-Based Physiotherapy AI",
+    "description": "A citation-grounded Retrieval-Augmented Generation system using LangChain, BioBERT, and ChromaDB over 20,000+ research articles. Achieved a 0.89 Faithfulness score (RAGAS), with a focus on reliable, evidence-based physiotherapy responses. Earned Best Paper (1st Place) at IEEE SSD 2026, Italy.",
+    "technologies": [
+      "Python",
+      "BioBERT",
+      "ChromaDB",
+      "LangChain",
+      "RAG",
+      "Flask",
+      "React"
+    ],
+    "github": "https://github.com/NamanBordia/AI-physiotherapy-chatbot.git",
+    "live": null,
+    "demo": null,
+    "summary": "Citation-grounded physiotherapy AI over 20,000+ research articles. Best Paper, 1st Place at IEEE SSD 2026."
+  },
+  {
+    "id": 2,
+    "title": "Real-Time Predictive Maintenance System",
+    "description": "Built a real-time data collection system using ESP32 sensors to monitor vibration and temperature. Designed a Flask-based backend serving LSTM models for multi-step time-series forecasting. Implemented live dashboards and monitoring to improve observability and early fault detection.",
+    "technologies": [
+      "Python",
+      "Flask",
+      "LSTM",
+      "IoT",
+      "ESP32",
+      "Deep Learning",
+      "Time Series"
+    ],
+    "github": "https://github.com/NamanBordia/predictive-maintenance",
+    "live": null,
+    "demo": null,
+    "summary": "An ESP32 sensor pipeline and LSTM forecasting system for real-time predictive maintenance."
+  },
+  {
+    "id": 3,
+    "title": "Community Issue Reporting Platform",
+    "description": "Engineered a full-stack application with React.js, Flask REST APIs, and MySQL for issue reporting, tracking, assignment, and administrative workflows. Implemented JWT authentication, role-based access control, and Leaflet map dashboards to visualize and manage issues.",
+    "technologies": [
+      "React",
+      "Flask",
+      "MySQL",
+      "REST APIs",
+      "JWT",
+      "TailwindCSS",
+      "Leaflet"
+    ],
+    "github": "https://github.com/NamanBordia/Community-Reporting-Platfrom",
+    "live": "https://community-issue-reporting-platform.namanbordia.in/",
+    "demo": "https://community-issue-reporting-platform.namanbordia.in/",
+    "summary": "Issue reporting and tracking with role-based access, JWT authentication, and Leaflet map dashboards."
+  },
+  {
+    "id": 4,
+    "title": "Automatic Door Locking System",
+    "description": "Built a smartphone-controlled IoT security system using local network communication. Implemented secure device control and real-time status monitoring for enhanced home security.",
+    "technologies": [
+      "IoT",
+      "Arduino",
+      "ESP32",
+      "Mobile App",
+      "Embedded Systems"
+    ],
+    "github": "https://github.com/NamanBordia/Automatic-door-locking-system.git",
+    "live": null,
+    "demo": null,
+    "summary": "A smartphone-controlled IoT door lock with local-network communication and live status monitoring."
+  },
+  {
+    "id": 5,
+    "title": "NoCodeML Tool",
+    "description": "A user-friendly tool that allows users to upload CSV files, select ML models, and train them without writing code. Supports both regression and classification tasks.",
+    "technologies": [
+      "React",
+      "FastAPI",
+      "Python",
+      "Machine Learning"
+    ],
+    "github": "https://github.com/NamanBordia/nocodeml",
+    "live": null,
+    "demo": null,
+    "summary": "Upload a CSV, choose a model, and train regression or classification models without writing code."
+  },
+  {
+    "id": 6,
+    "title": "GhostMask - Privacy-Preserving GenAI Pipeline",
+    "description": "Built a six-node Python/LangGraph pipeline for PII detection, secure tokenization, and contextual text reconstruction using Presidio, spaCy NER, and Gemma 2B. Implemented vault-based token mapping and a Gradio interface to inspect processing stages and support auditable LLM interactions. Used ChatGPT and GitHub Copilot to support implementation and refinement.",
+    "technologies": [
+      "Python",
+      "LangGraph",
+      "Presidio",
+      "spaCy",
+      "Gemma 2B",
+      "Gradio",
+      "GenAI"
+    ],
+    "github": "https://github.com/NamanBordia/Ghost_Mask.git",
+    "live": null,
+    "demo": null,
+    "summary": "A six-node GenAI pipeline that detects PII, securely tokenizes it, and reconstructs context with auditable vault mapping."
+  },
+  {
+    "id": 7,
+    "title": "ChatGuard IDS - Secure Chat and ML-Based Threat Detection",
+    "description": "Built a TCP client-server system with AES-256-GCM encryption, PBKDF2 authentication, access controls, and security logging. Applied TF-IDF, Logistic Regression, Random Forest, and Isolation Forest to flag spam, phishing, and anomalous client behavior.",
+    "technologies": [
+      "TCP",
+      "AES-256-GCM",
+      "PBKDF2",
+      "TF-IDF",
+      "Logistic Regression",
+      "Random Forest",
+      "Isolation Forest",
+      "Machine Learning"
+    ],
+    "github": "https://github.com/NamanBordia/Chatguard_Ids.git",
+    "live": null,
+    "demo": null,
+    "summary": "Encrypted TCP chat with AES-256-GCM and ML-based detection of spam, phishing, and anomalous client behavior."
+  }
+]

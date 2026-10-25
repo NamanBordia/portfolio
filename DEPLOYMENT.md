@@ -1,94 +1,35 @@
-# Portfolio - Vercel Hybrid Setup
+# Deployment
 
-## Architecture
+The portfolio consists of a React frontend and one active Vercel serverless function: `frontend/api/chat.js`.
 
-This portfolio uses a **hybrid approach** with Vercel:
+## Configuration
 
-- **Frontend**: React app with hardcoded project data (fast loading, no API calls needed)
-- **Serverless Function**: `/api/chat` endpoint for chatbot (protects Gemini API key)
+- Frontend directory: `frontend`
+- Build command: `npm run build`
+- Build output: `frontend/build` (or `build` when the project root is `frontend`)
+- Chat endpoint: `POST /api/chat`
+- Required server-side environment variable: `GROQ_API_KEY`
+- Optional model override: `GROQ_MODEL` (defaults to `openai/gpt-oss-20b`)
 
-## Structure
+The repository-level `vercel.json` retains the existing build and routing configuration. If the Vercel project uses `frontend` as its root, its `api/chat.js` function is inside that root.
 
-```
-frontend/
-├── src/
-│   ├── data/
-│   │   ├── projects.js      # All projects data (imported directly)
-│   │   └── chatContext.js   # Profile & context data for chatbot
-│   ├── pages/
-│   │   ├── Projects.js      # Uses local data (no API call)
-│   │   ├── Chatbot.js       # Calls /api/chat serverless function
-│   │   └── About.js         # Static content
-│   └── ...
-├── api/
-│   └── chat.js              # Vercel serverless function (Node.js)
-├── .env                      # API key (GEMINI_API_KEY)
-└── package.json
-```
+Set `GROQ_API_KEY` in the hosting environment. Do not prefix it with `REACT_APP_` or put it in browser code. The function reads it at request time.
 
-## Local Development
+For local development, run `npm start` from `frontend`. The development middleware in `src/setupProxy.js` serves `/api/chat` using the same handler as Vercel. Put `GROQ_API_KEY` in `frontend/.env` and restart the development server after changing environment variables, the API, or the middleware. You can also use the Vercel development runtime.
 
-1. **Install dependencies:**
-   ```bash
-   cd frontend
-   npm install @google/generative-ai
-   ```
+## Content updates
 
-2. **Set up environment variable:**
-   Create `frontend/.env`:
-   ```
-   GEMINI_API_KEY=your_key_here
-   ```
+- Projects: `frontend/src/data/projects.json`
+- Education, skills, internships, publications, and assistant profile: `frontend/src/data/profile.json`
+- Chatbot implementation: `frontend/api/chat.js`
+- About, experience, and contact details: `frontend/src/components/`
+- Resume: `frontend/public/assets/resume.pdf`
+- Portrait: `frontend/public/assets/myimg2.png`
 
-3. **Run locally:**
-   ```bash
-   npm start
-   ```
+No Render service, Python dependencies, database, or separate backend process is required.
 
-4. **Test serverless function locally:**
-   Install Vercel CLI:
-   ```bash
-   npm install -g vercel
-   vercel dev
-   ```
+## Chatbot troubleshooting
 
-## Deployment to Vercel
+The previous `llama-3.1-8b-instant` model is unavailable to the configured key. The chatbot now defaults to `openai/gpt-oss-20b`. If setting `GROQ_MODEL`, select a chat model available to your Groq account. Changes to code or Vercel environment variables require a new deployment.
 
-1. **Push to GitHub:**
-   ```bash
-   git add .
-   git commit -m "Migrate to Vercel hybrid setup"
-   git push
-   ```
-
-2. **Deploy on Vercel:**
-   - Go to [vercel.com](https://vercel.com)
-   - Import your GitHub repository
-   - Set root directory to `frontend`
-   - Add environment variable: `GEMINI_API_KEY`
-   - Deploy!
-
-3. **Set Environment Variable:**
-   - Go to Project Settings → Environment Variables
-   - Add: `GEMINI_API_KEY` = `your_api_key`
-   - Save and redeploy
-
-## Benefits
-
-✅ **Fast Loading**: Projects load instantly (no backend API call)  
-✅ **Secure**: API key hidden in serverless function  
-✅ **Free Hosting**: Vercel free tier is generous  
-✅ **Auto-Scaling**: Serverless functions scale automatically  
-✅ **Simple Deployment**: Single platform, one command  
-
-## API Endpoints
-
-- `GET /` - Frontend app
-- `POST /api/chat` - Chatbot API (serverless function)
-
-## Notes
-
-- Backend folder is no longer needed for deployment
-- Projects data is now in `frontend/src/data/projects.js`
-- Chatbot context is in `frontend/src/data/chatContext.js`
-- All data updates should be made in these files
+Verify that `GROQ_API_KEY` is configured for the intended Vercel environment. A frontend production build alone does not verify the live model connection.
